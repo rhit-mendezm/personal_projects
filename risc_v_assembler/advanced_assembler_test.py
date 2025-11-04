@@ -73,15 +73,15 @@ class TestSBType(unittest.TestCase):
                         L1:beq a0, x0, L2"""
 
         instruction = "beq zero, t0, 4 "
-        machine = "0000 0000 0101 0000 0000 0010 0110 0011"
+        machine_code = "0000 0000 0101 0000 0000 0010 0110 0011"
         test_assemble_method(
-            self.assertEqual, assembler.Assemble_SB_Type, instruction, machine
+            self.assertEqual, assembler.Assemble_SB_Type, instruction, machine_code
         )
 
         instruction = "beq zero, s0, -4"
-        machine = "1111 1110 1000 0000 0000 1110 1110 0011"
+        machine_code = "1111 1110 1000 0000 0000 1110 1110 0011"
         test_assemble_method(
-            self.assertEqual, assembler.Assemble_SB_Type, instruction, machine
+            self.assertEqual, assembler.Assemble_SB_Type, instruction, machine_code
         )
 
         labels = {
@@ -90,176 +90,196 @@ class TestSBType(unittest.TestCase):
             "L3": int("10000000", 16),
         }
 
-        address_for_reference = int("00400008", 16) 
+        address_for_reference = int("00400008", 16)
         index = 2
         instruction = "beq zero, a0, L1"
-        machine = "0000 0000 1010 0000 0000 0010 0110 0011"
+        machine_code = "0000 0000 1010 0000 0000 0010 0110 0011"
         test_assemble_method(
             self.assertEqual,
             assembler.Assemble_SB_Type,
             instruction,
-            machine,
-            index,
-            labels
-        )
-
-        instruction = "beq a0, x0, L2"
-        machine = "1111 1110 0000 0101 0000 1100 1110 0011"
-        address_for_reference = int("0040000c", 16) 
-        index = 3
-        test_assemble_method(
-            self.assertEqual,
-            assembler.Assemble_SB_Type,
-            instruction,
-            machine,
+            machine_code,
             index,
             labels,
         )
 
-    # @weight(1)
+        instruction = "beq a0, x0, L2"
+        machine_code = "1111 1110 0000 0101 0000 1100 1110 0011"
+        address_for_reference = int("0040000c", 16)
+        index = 3
+        test_assemble_method(
+            self.assertEqual,
+            assembler.Assemble_SB_Type,
+            instruction,
+            machine_code,
+            index,
+            labels,
+        )
+
     def test_SB_types_bne(self):
-        # this is just for reference
-        full_code = """bne zero, t0, 4
+        full_code_for_reference = """bne zero, t0, 4
                         L2: bne zero, s0, -4
                         bne zero, a0, L1
                         L1:bne a0, x0, L2"""
 
-        inst = "bne zero, t0, 4 "
-        machine = "0000 0000 0101 0000 0001 0010 0110 0011"
+        instruction = "bne zero, t0, 4 "
+        machine_code = "0000 0000 0101 0000 0001 0010 0110 0011"
         test_assemble_method(
-            self.assertEqual, assembler.Assemble_SB_Type, inst, machine
+            self.assertEqual, assembler.Assemble_SB_Type, instruction, machine_code
         )
 
-        inst = "bne zero, s0, -4"
-        machine = "1111 1110 1000 0000 0001 1110 1110 0011"
+        instruction = "bne zero, s0, -4"
+        machine_code = "1111 1110 1000 0000 0001 1110 1110 0011"
         test_assemble_method(
-            self.assertEqual, assembler.Assemble_SB_Type, inst, machine
+            self.assertEqual, assembler.Assemble_SB_Type, instruction, machine_code
         )
 
-        # set up the labels for the tests below
         labels = {"L2": int("00400004", 16), "L1": int("0040000c", 16)}
 
-        address = int("00400008", 16)  # just for reference
+        address_for_reference = int("00400008", 16)
         index = 2
-        inst = "bne zero, a0, L1"
-        machine = "0000 0000 1010 0000 0001 0010 0110 0011"
+        instruction = "bne zero, a0, L1"
+        machine_code = "0000 0000 1010 0000 0001 0010 0110 0011"
         test_assemble_method(
-            self.assertEqual, assembler.Assemble_SB_Type, inst, machine, index, labels
+            self.assertEqual,
+            assembler.Assemble_SB_Type,
+            instruction,
+            machine_code,
+            index,
+            labels,
         )
 
-        inst = "bne a0, x0, L2"
-        machine = "1111 1110 0000 0101 0001 1100 1110 0011"
-        address = int("0040000c", 16)  # just for reference
+        instruction = "bne a0, x0, L2"
+        machine_code = "1111 1110 0000 0101 0001 1100 1110 0011"
+        address_for_reference = int("0040000c", 16)
         index = 3
         test_assemble_method(
-            self.assertEqual, assembler.Assemble_SB_Type, inst, machine, index, labels
+            self.assertEqual,
+            assembler.Assemble_SB_Type,
+            instruction,
+            machine_code,
+            index,
+            labels,
         )
 
-    # @weight(1)
     def test_SB_types_blt(self):
-        # this is just for reference
-        full_code = """blt zero, t0, 4
+        full_code_for_reference = """blt zero, t0, 4
                         L2: blt zero, s0, -4
                         blt zero, a0, L1
                         L1:blt a0, x0, L2"""
 
-        inst = "blt zero, t0, 4 "
-        machine = "0000 0000 0101 0000 0100 0010 0110 0011"
+        instruction = "blt zero, t0, 4 "
+        machine_code = "0000 0000 0101 0000 0100 0010 0110 0011"
         test_assemble_method(
-            self.assertEqual, assembler.Assemble_SB_Type, inst, machine
+            self.assertEqual, assembler.Assemble_SB_Type, instruction, machine_code
         )
 
-        inst = "blt zero, s0, -4"
-        machine = "1111 1110 1000 0000 0100 1110 1110 0011"
+        instruction = "blt zero, s0, -4"
+        machine_code = "1111 1110 1000 0000 0100 1110 1110 0011"
         test_assemble_method(
-            self.assertEqual, assembler.Assemble_SB_Type, inst, machine
+            self.assertEqual, assembler.Assemble_SB_Type, instruction, machine_code
         )
 
-        # set up the labels for the tests below
         labels = {"L2": int("00400004", 16), "L1": int("0040000c", 16)}
 
-        address = int("00400008", 16)  # just for reference
+        address_for_reference = int("00400008", 16)
         index = 2
-        inst = "blt zero, a0, L1"
-        machine = "0000 0000 1010 0000 0100 0010 0110 0011"
+        instruction = "blt zero, a0, L1"
+        machine_code = "0000 0000 1010 0000 0100 0010 0110 0011"
         test_assemble_method(
-            self.assertEqual, assembler.Assemble_SB_Type, inst, machine, index, labels
+            self.assertEqual,
+            assembler.Assemble_SB_Type,
+            instruction,
+            machine_code,
+            index,
+            labels,
         )
 
-        inst = "blt a0, x0, L2"
-        machine = "1111 1110 0000 0101 0100 1100 1110 0011"
-        address = int("0040000c", 16)  # just for reference
+        instruction = "blt a0, x0, L2"
+        machine_code = "1111 1110 0000 0101 0100 1100 1110 0011"
+        address_for_reference = int("0040000c", 16)
         index = 3
         test_assemble_method(
-            self.assertEqual, assembler.Assemble_SB_Type, inst, machine, index, labels
+            self.assertEqual,
+            assembler.Assemble_SB_Type,
+            instruction,
+            machine_code,
+            index,
+            labels,
         )
 
-    # @weight(1)
     def test_SB_types_bge(self):
-        # this is just for reference
-        full_code = """bge zero, t0, 4
+        full_code_for_reference = """bge zero, t0, 4
                         L2: bge zero, s0, -4
                         bge zero, a0, L1
                         L1:bbgegt a0, x0, L2"""
 
-        inst = "bge zero, t0, 4 "
-        machine = "0000 0000 0101 0000 0101 0010 0110 0011"
+        instruction = "bge zero, t0, 4 "
+        machine_code = "0000 0000 0101 0000 0101 0010 0110 0011"
         test_assemble_method(
-            self.assertEqual, assembler.Assemble_SB_Type, inst, machine
+            self.assertEqual, assembler.Assemble_SB_Type, instruction, machine_code
         )
 
-        inst = "bge zero, s0, -4"
-        machine = "1111 1110 1000 0000 0101 1110 1110 0011"
+        instruction = "bge zero, s0, -4"
+        machine_code = "1111 1110 1000 0000 0101 1110 1110 0011"
         test_assemble_method(
-            self.assertEqual, assembler.Assemble_SB_Type, inst, machine
+            self.assertEqual, assembler.Assemble_SB_Type, instruction, machine_code
         )
 
-        # set up the labels for the tests below
         labels = {"L2": int("00400004", 16), "L1": int("0040000c", 16)}
 
-        address = int("00400008", 16)  # just for reference
+        address_for_reference = int("00400008", 16)
         index = 2
-        inst = "bge zero, a0, L1"
-        machine = "0000 0000 1010 0000 0101 0010 0110 0011"
+        instruction = "bge zero, a0, L1"
+        machine_code = "0000 0000 1010 0000 0101 0010 0110 0011"
         test_assemble_method(
-            self.assertEqual, assembler.Assemble_SB_Type, inst, machine, index, labels
+            self.assertEqual,
+            assembler.Assemble_SB_Type,
+            instruction,
+            machine_code,
+            index,
+            labels,
         )
 
-        inst = "bge a0, x0, L2"
-        machine = "1111 1110 0000 0101 0101 1100 1110 0011"
-        address = int("0040000c", 16)  # just for reference
+        instruction = "bge a0, x0, L2"
+        machine_code = "1111 1110 0000 0101 0101 1100 1110 0011"
+        address_for_reference = int("0040000c", 16)
         index = 3
         test_assemble_method(
-            self.assertEqual, assembler.Assemble_SB_Type, inst, machine, index, labels
+            self.assertEqual,
+            assembler.Assemble_SB_Type,
+            instruction,
+            machine_code,
+            index,
+            labels,
         )
 
-    # @weight(1)
     def test_SB_types_range(self):
         labels = {
             "L2": int("00400004", 16),
             "L1": int("0040000c", 16),
             "L3": int("10000000", 16),
         }
-        # check for immediate issues
-        inst = "beq t0, t0, 16383"
+
+        instruction = "beq t0, t0, 16383"
         index = 0
         test_assembler_error_handling(
             self.assertRaises,
             assembler.BadImmediate,
             assembler.Assemble_SB_Type,
-            inst,
+            instruction,
             index,
             labels,
         )
 
-        inst = "beq t0, t0, L3"
+        instruction = "beq t0, t0, L3"
         index = 0
-        address = int("00400000", 16)  # just for reference0
+        address_for_reference = int("00400000", 16)
         test_assembler_error_handling(
             self.assertRaises,
             assembler.BadImmediate,
             assembler.Assemble_SB_Type,
-            inst,
+            instruction,
             index,
             labels,
         )
