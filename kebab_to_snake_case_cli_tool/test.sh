@@ -1,6 +1,5 @@
 #!/bin/bash
 
-source "${COLORS}"
 source "./rename_to_snake_case.sh"
 
 test_rename_to_snake_case_on_kebab_case_file() {

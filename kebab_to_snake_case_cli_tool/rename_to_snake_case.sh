@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source "${COLORS}" 
+source "./colors.sh" 
 
 _do_rename() {
 	local file="$1"
