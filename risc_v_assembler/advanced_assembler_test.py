@@ -364,39 +364,37 @@ class TestUJType(unittest.TestCase):
 
 
 class TestUType(unittest.TestCase):
-    # @weight(1)
     def test_U_type_lui(self):
-        inst = "lui t0, 1"
+        instruction = "lui t0, 1"
         machine = "0000 0000 0000 0000 0001 0010 1011 0111"
-        cmd, operands = split_instruction(inst)
-        self.assertEqual(machine, assembler.Assemble_U_Type(cmd, operands, 0))
+        command, operands = split_instruction(instruction)
+        self.assertEqual(machine, assembler.Assemble_U_Type(command, operands, 0))
 
-        inst = "lui a0, 123"
+        instruction = "lui a0, 123"
         machine = "0000 0000 0000 0111 1011 0101 0011 0111"
-        cmd, operands = split_instruction(inst)
-        self.assertEqual(machine, assembler.Assemble_U_Type(cmd, operands, 0))
+        command, operands = split_instruction(instruction)
+        self.assertEqual(machine, assembler.Assemble_U_Type(command, operands, 0))
 
-        inst = "lui t0, -1"
+        instruction = "lui t0, -1"
         machine = "1111 1111 1111 1111 1111 0010 1011 0111"
-        cmd, operands = split_instruction(inst)
-        self.assertEqual(machine, assembler.Assemble_U_Type(cmd, operands, 0))
+        command, operands = split_instruction(instruction)
+        self.assertEqual(machine, assembler.Assemble_U_Type(command, operands, 0))
 
-    # @weight(1)
     def test_U_type_operands(self):
-        inst = "lui t0, t0"
-        cmd, operands = split_instruction(inst)
+        instruction = "lui t0, t0"
+        command, operands = split_instruction(instruction)
         with self.assertRaises(assembler.BadImmediate):
-            assembler.Assemble_U_Type(cmd, operands, 0)
+            assembler.Assemble_U_Type(command, operands, 0)
 
-        inst = "lui t0, t0, 5"
-        cmd, operands = split_instruction(inst)
+        instruction = "lui t0, t0, 5"
+        command, operands = split_instruction(instruction)
         with self.assertRaises(assembler.BadOperands):
-            assembler.Assemble_U_Type(cmd, operands, 0)
+            assembler.Assemble_U_Type(command, operands, 0)
 
-        inst = "lui t0, 2097153"
-        cmd, operands = split_instruction(inst)
+        instruction = "lui t0, 2097153"
+        command, operands = split_instruction(instruction)
         with self.assertRaises(assembler.BadImmediate):
-            assembler.Assemble_U_Type(cmd, operands, 0)
+            assembler.Assemble_U_Type(command, operands, 0)
 
 
 class TestPseudos(unittest.TestCase):
