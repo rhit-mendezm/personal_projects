@@ -1,6 +1,5 @@
 import assembler, pseudoinstruction_handler, unittest
 
-
 def split_instruction(instruction):
     instruction = instruction.replace(",", "")
     split_instruction = instruction.split()
@@ -22,7 +21,6 @@ def test_assembler_error_handling(
 
 
 class TestLabels(unittest.TestCase):
-
     def test_basic_labels(self):
         instructions = """LABEL1: add x1, x1, x1 
                         add t0, s0, sp
