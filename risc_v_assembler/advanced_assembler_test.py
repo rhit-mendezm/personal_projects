@@ -275,10 +275,8 @@ class TestSBType(unittest.TestCase):
 
 
 class TestUJType(unittest.TestCase):
-    # @weight(1)
     def test_UJ_types_jal(self):
-        # this is just for reference
-        full_code = """L2: jal x0, 0
+        full_code_for_reference = """L2: jal x0, 0
                     jal ra, -4
                     jal ra, L1
                     L1: jal ra, L2"""
@@ -295,10 +293,8 @@ class TestUJType(unittest.TestCase):
             self.assertEqual, assembler.Assemble_UJ_Type, inst, machine
         )
 
-        # set up the labels for the tests below
         labels = {"L2": int("00400000", 16), "L1": int("0040000c", 16)}
-
-        address = int("00400008", 16)  # just for reference
+        address_for_reference = int("00400008", 16)  
         index = 2
         inst = "jal ra, L1"
         machine = "0000 0000 0100 0000 0000 0000 1110 1111"
@@ -308,22 +304,20 @@ class TestUJType(unittest.TestCase):
 
         inst = "jal ra, L2"
         machine = "1111 1111 0101 1111 1111 0000 1110 1111"
-        address = int("0040000c", 16)  # just for reference
+        address_for_reference = int("0040000c", 16) 
         index = 3
         test_assemble_method(
             self.assertEqual, assembler.Assemble_UJ_Type, inst, machine, index, labels
         )
 
-    # @weight(1)
     def test_UJ_types_range(self):
-        # set up the labels for the tests below
         labels = {
             "L2": int("00400000", 16),
             "L1": int("0040000c", 16),
             "L3": int("10000000", 16),
         }
 
-        address = int("00400000", 16)  # just for reference
+        address_for_reference = int("00400000", 16)  
         index = 0
         inst = "jal ra, 4194303"
         test_assembler_error_handling(
@@ -332,11 +326,11 @@ class TestUJType(unittest.TestCase):
             assembler.Assemble_UJ_Type,
             inst,
             index,
-            labels,
+            labels
         )
 
         inst = "jal ra, L3"
-        address = int("00400000", 16)  # just for reference
+        address_for_reference = int("00400000", 16)  
         index = 0
         test_assembler_error_handling(
             self.assertRaises,
@@ -344,29 +338,28 @@ class TestUJType(unittest.TestCase):
             assembler.Assemble_UJ_Type,
             inst,
             index,
-            labels,
+            labels
         )
 
-    # @weight(1)
     def test_UJ_types_operands(self):
-        inst = "jal ra, t0"
+        instruction = "jal ra, t0"
         test_assembler_error_handling(
-            self.assertRaises, assembler.BadImmediate, assembler.Assemble_UJ_Type, inst
+            self.assertRaises, assembler.BadImmediate, assembler.Assemble_UJ_Type, instruction
         )
 
-        inst = "jal 0, t0"
+        instruction = "jal 0, t0"
         test_assembler_error_handling(
-            self.assertRaises, assembler.BadRegister, assembler.Assemble_UJ_Type, inst
+            self.assertRaises, assembler.BadRegister, assembler.Assemble_UJ_Type, instruction
         )
 
-        inst = "jal ra, t0, L"
+        instruction = "jal ra, t0, L"
         test_assembler_error_handling(
-            self.assertRaises, assembler.BadOperands, assembler.Assemble_UJ_Type, inst
+            self.assertRaises, assembler.BadOperands, assembler.Assemble_UJ_Type, instruction
         )
 
-        inst = "jal ra, 2097153"
+        instruction = "jal ra, 2097153"
         test_assembler_error_handling(
-            self.assertRaises, assembler.BadImmediate, assembler.Assemble_UJ_Type, inst
+            self.assertRaises, assembler.BadImmediate, assembler.Assemble_UJ_Type, instruction
         )
 
 
