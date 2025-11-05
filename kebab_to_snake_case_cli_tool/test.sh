@@ -4,7 +4,7 @@ source "./rename_to_snake_case.sh"
 
 test_rename_to_snake_case_on_kebab_case_file() {
 	mkdir test_environment
-	cd test_environment || { echo "Unable to enter test_environment"; return 1; }
+	cd test_environment || { echo "Unable to enter test_environment."; return 1; }
 	touch kebab-case-file.txt
 
 	rename_to_snake_case --silent kebab-case-file.txt > /dev/null 2>&1
@@ -21,7 +21,7 @@ test_rename_to_snake_case_on_kebab_case_file() {
 
 test_rename_to_snake_case_on_kebab_case_directory() {
 	mkdir test_environment
-	cd test_environment || { echo "Unable to enter test_environment"; return 1; }
+	cd test_environment || { echo "Unable to enter test_environment."; return 1; }
 	mkdir kebab-case-directory
 
 	rename_to_snake_case --silent kebab-case-directory > /dev/null 2>&1
@@ -38,7 +38,7 @@ test_rename_to_snake_case_on_kebab_case_directory() {
 
 test_rename_to_snake_case_on_snake_case_file() {
 	mkdir test_environment
-	cd test_environment || { echo "Unable to enter test_environment"; return 1; }
+	cd test_environment || { echo "Unable to enter test_environment."; return 1; }
 	touch snake_case_file.txt
 
 	rename_to_snake_case --silent snake_case_file.txt > /dev/null 2>&1
@@ -55,7 +55,7 @@ test_rename_to_snake_case_on_snake_case_file() {
 
 test_rename_to_snake_case_on_snake_case_directory() {
 	mkdir test_environment
-	cd test_environment || { echo "Unable to enter test_environment"; return 1; }
+	cd test_environment || { echo "Unable to enter test_environment."; return 1; }
 	mkdir snake_case_directory
 
 	rename_to_snake_case --silent snake_case_directory > /dev/null 2>&1
@@ -72,43 +72,40 @@ test_rename_to_snake_case_on_snake_case_directory() {
 
 test_rename_to_snake_case_on_kebab_case_directory_with_one_file_and_one_empty_directory() {
 	mkdir test_environment
-	cd test_environment || { echo "Unable to enter test_environment"; return 1; }
+	cd test_environment || { echo "Unable to enter test_environment."; return 1; }
 	mkdir top-level-kebab-case-directory
 	touch top-level-kebab-case-directory/kebab-case-file.txt
 	mkdir top-level-kebab-case-directory/empty-kebab-case-directory
 
 	rename_to_snake_case --silent top-level-kebab-case-directory > /dev/null 2>&1
 
-	echo -e "${WHITE}Test: ${CYAN}Kebab case directory with one file and one empty directory${WHITE}"
-
 	local is_failed=false
 	if [[ -d "top_level_kebab_case_directory" ]]; then
 		cd top_level_kebab_case_directory
-		echo -e "${YELLOW}Level 0: ${WHITE}Top level directory was successfully renamed."
 	else
 		is_failed=true
 		cd top-level-kebab-case-directory
-		echo -e "${BLUE}Level 0: ${WHITE}Top level directory was not successfully renamed."
+		echo -e "${RED}Level 0: ${WHITE}Top level directory was not successfully renamed."
 	fi
 
 	if [[ -f "kebab_case_file.txt" ]]; then
-		echo -e "${YELLOW}Level 1: ${WHITE}Kebab case file was successfully renamed."
+		:
 	else
 		is_failed=true
-		echo -e "${BLUE}Level 1: ${WHITE} Kebab case file was not successfully renamed."
+		echo -e "${RED}Level 1: ${WHITE} Kebab case file was not successfully renamed."
 	fi
 
 	if [[ -d "empty_kebab_case_directory" ]]; then
-		echo -e "${YELLOW}Level 1: ${WHITE}Empty kebab case directory was successfully renamed."
+		:
 	else
 		is_failed=true
-		echo -e "${BLUE}Level 1: ${WHITE}Empty kebab case directory was not successfully renamed."
+		echo -e "${RED}Level 1: ${WHITE}Empty kebab case directory was not successfully renamed."
 	fi
 
 	if [[ ${is_failed} == true ]]; then
-		echo -e "${RED}Test failed.${WHITE}"
+		echo -e "${RED}Test failed: ${WHITE}Kebab case directory with one file and one empty directory."
 	else
-		echo -e "${GREEN}Test passed.${WHITE}"
+		echo -e "${GREEN}Test passed: ${WHITE}Kebab case directory with one file and one empty directory."
 	fi
 
 	cd ../..
@@ -131,7 +128,7 @@ test_rename_to_snake_case_with_negative_max_depth() {
 
 test_rename_to_snake_case_on_kebab_case_directory_with_two_files_and_one_empty_directory_and_one_populated_directory() {
 	mkdir test_environment
-	cd test_environment || { echo "Unable to enter test_environment"; return 1; }
+	cd test_environment || { echo "Unable to enter test_environment."; return 1; }
 	mkdir top-level-kebab-case-directory
 	touch top-level-kebab-case-directory/kebab-case-file.txt
 	mkdir top-level-kebab-case-directory/empty-kebab-case-directory
@@ -150,73 +147,69 @@ test_rename_to_snake_case_on_kebab_case_directory_with_two_files_and_one_empty_d
 	local is_failed=false
 	if [[ -d "top_level_kebab_case_directory" ]]; then
 		cd top_level_kebab_case_directory
-		echo -e "${YELLOW}Level 0: ${WHITE}Top level directory was successfully named."
 	else
 		is_failed=true
 		cd top-level-kebab-case-directory
-		echo -e "${BLUE}Level 0: ${WHITE}Top level directory was not successfully named."
+		echo -e "${RED}Level 0: ${WHITE}Top level directory was not successfully named."
 	fi
 
 	if [[ -f "kebab_case_file.txt" ]]; then
-		echo -e "${YELLOW}Level 1: ${WHITE}First file was successfully named."
+		continue
 	else
 		is_failed=true
-		echo -e "${BLUE}Level 1: ${WHITE}First file was not successfully named."
+		echo -e "${RED}Level 1: ${WHITE}First file was not successfully named."
 	fi
 
 	if [[ -d "empty_kebab_case_directory" ]]; then
-		echo -e "${YELLOW}Level 1: ${WHITE}Empty directory was successfully named."
+		continue
 	else
 		is_failed=true
-		echo -e "${BLUE}Level 1: ${WHITE}Empty directory was not successfully named."
+		echo -e "${RED}Level 1: ${WHITE}Empty directory was not successfully named."
 	fi
 
 	if [[ -d "populated_kebab_case_directory" ]]; then
 		cd populated_kebab_case_directory
-		echo -e "${YELLOW}Level 1: ${WHITE}Populated directory was successfully named."
 	else
 		is_failed=true
 		cd populated-kebab-case-directory
-		echo -e "${BLUE}Level 1: ${WHITE}Populated directory was not successfully named."
+		echo -e "${RED}Populated directory was not successfully named."
 	fi
 
 	if [[ -f "another_kebab_case_file.txt" ]]; then
-		echo -e "${YELLOW}Level 2: ${WHITE}File was sucessfully named."
+		continue
 	else
 		is_failed=true
-		echo -e "${BLUE}Level 2: ${WHITE}File was not successfully named."
+		echo -e "${RED}File was not successfully named."
 	fi
 
 	if [[ -d "final_kebab_case_directory_to_be_touched" ]]; then
 		cd final_kebab_case_directory_to_be_touched
-		echo -e "${YELLOW}Level 2: ${WHITE}Directory was successfully named."
 	else
 		is_failed=true
 		cd final-kebab-case-directory-to-be-touched
-		echo -e "${BLUE}Level 2: ${WHITE}Directory was not successfully named."
+		echo -e "${RED}Directory was not successfully named."
 	fi
 
 	if [[ -f "should-remain-kebab-case-file.txt" ]]; then
-		echo -e "${YELLOW}Level 3: ${WHITE}File kept original name."
+		continue
 	else
 		is_failed=true
-		echo -e "${BLUE}Level 3: ${WHITE}File did not keep original name."
+		echo -e "${RED}File did not keep original name."
 	fi
 
 	if [[ -d "should-remain-kebab-case-directory" ]]; then
 		cd should-remain-kebab-case-directory
-		echo -e "${YELLOW}Level 3: ${WHITE}Directory kept original name."
 	else
 		is_failed=true
 		cd should_remain_kebab_case_directory
-		echo -e "${YELLOW}Level 3: ${WHITE}Directory did not keep original name."
+		echo -e "${RED}Directory did not keep original name."
 	fi
 
 	if [[ -f "another-untouched-kebab-case-file.txt" ]]; then
-		echo -e "${YELLOW}Level 4: ${WHITE}File kept original name."
+		continue
 	else
 		is_failed=true
-		echo -e "${BLUE}Level 4: ${WHITE}File did not keep original name."
+		echo -e "${RED}File did not keep original name."
 	fi
 
 	if [[ ${is_failed} == true ]]; then
