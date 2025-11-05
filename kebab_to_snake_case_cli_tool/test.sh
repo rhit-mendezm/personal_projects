@@ -142,8 +142,6 @@ test_rename_to_snake_case_on_kebab_case_directory_with_two_files_and_one_empty_d
 
 	rename_to_snake_case --silent --max-depth 2 top-level-kebab-case-directory > /dev/null 2>&1
 
-	echo -e "${WHITE}Test: ${CYAN}Kebab directory with nested files and directories (max-depth=2)${WHITE}"
-
 	local is_failed=false
 	if [[ -d "top_level_kebab_case_directory" ]]; then
 		cd top_level_kebab_case_directory
@@ -154,14 +152,14 @@ test_rename_to_snake_case_on_kebab_case_directory_with_two_files_and_one_empty_d
 	fi
 
 	if [[ -f "kebab_case_file.txt" ]]; then
-		continue
+		:
 	else
 		is_failed=true
 		echo -e "${RED}Level 1: ${WHITE}First file was not successfully named."
 	fi
 
 	if [[ -d "empty_kebab_case_directory" ]]; then
-		continue
+		:
 	else
 		is_failed=true
 		echo -e "${RED}Level 1: ${WHITE}Empty directory was not successfully named."
@@ -172,14 +170,14 @@ test_rename_to_snake_case_on_kebab_case_directory_with_two_files_and_one_empty_d
 	else
 		is_failed=true
 		cd populated-kebab-case-directory
-		echo -e "${RED}Populated directory was not successfully named."
+		echo -e "${RED}Level 1: ${WHITE}Populated directory was not successfully named."
 	fi
 
 	if [[ -f "another_kebab_case_file.txt" ]]; then
-		continue
+		:
 	else
 		is_failed=true
-		echo -e "${RED}File was not successfully named."
+		echo -e "${RED}Level 2: ${WHITE}File was not successfully named."
 	fi
 
 	if [[ -d "final_kebab_case_directory_to_be_touched" ]]; then
@@ -187,14 +185,14 @@ test_rename_to_snake_case_on_kebab_case_directory_with_two_files_and_one_empty_d
 	else
 		is_failed=true
 		cd final-kebab-case-directory-to-be-touched
-		echo -e "${RED}Directory was not successfully named."
+		echo -e "${RED}Level 2: ${WHITE}Directory was not successfully named."
 	fi
 
 	if [[ -f "should-remain-kebab-case-file.txt" ]]; then
-		continue
+		:
 	else
 		is_failed=true
-		echo -e "${RED}File did not keep original name."
+		echo -e "${RED}Level 3: ${WHITE}File did not keep original name."
 	fi
 
 	if [[ -d "should-remain-kebab-case-directory" ]]; then
@@ -202,20 +200,20 @@ test_rename_to_snake_case_on_kebab_case_directory_with_two_files_and_one_empty_d
 	else
 		is_failed=true
 		cd should_remain_kebab_case_directory
-		echo -e "${RED}Directory did not keep original name."
+		echo -e "${RED}Level 4: ${WHITE}Directory did not keep original name."
 	fi
 
 	if [[ -f "another-untouched-kebab-case-file.txt" ]]; then
-		continue
+		:
 	else
 		is_failed=true
-		echo -e "${RED}File did not keep original name."
+		echo -e "${RED}Level 4: ${WHITE}File did not keep original name."
 	fi
 
 	if [[ ${is_failed} == true ]]; then
-		echo -e "${RED}Test failed.${WHITE}"
+		echo -e "${RED}Test failed: ${WHITE}Kebab directory with nested files and directories (max-depth=2)"
 	else
-		echo -e "${GREEN}Test passed.${WHITE}"
+		echo -e "${GREEN}Test passed: ${WHITE}Kebab directory with nested files and directories (max-depth=2)"
 	fi
 
 	cd ../../../../..
